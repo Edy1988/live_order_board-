@@ -1,4 +1,4 @@
-## User Stories
+### User Stories
 ```
 As a User
 I can create an order with the following details:
@@ -28,4 +28,16 @@ I can see SELL orders on the board in ascending order
 As a User
 I can see BUY orders on the board in descending order
 
+```
+
+### To run tests:
+
+```
+rspec
+```
+
+### To run linting:
+
+```
+rubocop
 ```
