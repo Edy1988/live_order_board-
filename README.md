@@ -83,7 +83,7 @@ $ rspec
 $ rubocop
 ```
 
-### To run the demonstration script
+### To run the demonstration script:
 
 ```
 $ ruby main.rb
