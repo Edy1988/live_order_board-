@@ -89,4 +89,8 @@ $ rubocop
 $ ruby main.rb
 ```
 
-You can change/inspect the code in main.rb to see how it works. Alternatively, you can check the specs to see working examples.
+You can change/inspect the code in main.rb to see how it works.
+
+![Demo](assets/demo.png)
+
+Alternatively, you can check the specs to see working examples.
