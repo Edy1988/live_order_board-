@@ -20,4 +20,8 @@ class LiveBoard
     }.join("\n")
   end
 
+  def cancel(order)
+    @all_orders.delete(order)
+  end
+
 end
