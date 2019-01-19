@@ -1,3 +1,5 @@
+## SilverBars
+A small program which generates a summary of buys and sell orders and displays it as described in user stories.
 ### User Stories
 ```
 As a User
@@ -33,11 +35,11 @@ I can see BUY orders on the board in descending order
 ### To run tests:
 
 ```
-rspec
+$ rspec
 ```
 
 ### To run linting:
 
 ```
-rubocop
+$ rubocop
 ```
