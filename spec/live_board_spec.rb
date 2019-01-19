@@ -28,4 +28,12 @@ describe 'LiveBoard' do
     expect(board.summary).to eq "There are no orders registered."
   end
 
+  it 'generates summary of one sell order' do
+    board = LiveBoard.new
+
+    board.register(Order.new(user_id: "user1", quantity: 7.5, price_per_kg: 80, type: :sell))
+
+    expect(board.summary).to eq "- 7.5kg for £80"
+  end
+
 end
