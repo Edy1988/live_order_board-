@@ -24,12 +24,16 @@ class LiveBoard
   end
 
   def summary
-    return "There are no orders registered." if @sell_orders.empty? && @buy_orders.empty?
+    return "There are no orders registered." if empty?
 
     (formatted_sell_orders + formatted_buy_orders).join("\n")
   end
 
 private
+  def empty?
+    @sell_orders.empty? && @buy_orders.empty?
+  end
+
   def formatted_sell_orders
     merge_by_price(@sell_orders).sort.map { |(price, quantity)|
       format(quantity: quantity, price: price, label: "SELL")
@@ -37,7 +41,7 @@ private
   end
 
   def formatted_buy_orders
-    merge_by_price(@buy_orders).sort_by { |(price, quantity)|
+    merge_by_price(@buy_orders).sort_by { |(price, _)|
       -price
     }.map { |(price, quantity)|
       format(quantity: quantity, price: price, label: "BUY")
