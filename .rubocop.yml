@@ -38,6 +38,9 @@
 
 Metrics/LineLength:
   Max: 100
+  Exclude:
+    - 'spec/**/*'
+    - 'test/**/*'
 
 Metrics/BlockLength:
   Exclude:

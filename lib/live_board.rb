@@ -55,9 +55,9 @@ private
   def merge_by_price(orders)
     orders.reduce({}) { |merged, order|
       if merged.key?(order.price_per_kg)
-        merged[order.price_per_kg] += order.quantity
+        merged[order.price_per_kg] += order.quantity_in_kg
       else
-        merged[order.price_per_kg] = order.quantity
+        merged[order.price_per_kg] = order.quantity_in_kg
       end
       merged
     }
