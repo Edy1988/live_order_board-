@@ -110,6 +110,24 @@ describe 'Live Order Board' do
     )
   end
 
+  it 'generates summary of sell and buy orders' do
+    board = LiveBoard.new
+
+    board.register(buy_order(quantity: 6.5, price_per_kg: 78.55))
+    board.register(sell_order(quantity: 7.5, price_per_kg: 75))
+    board.register(buy_order(quantity: 12.7, price_per_kg: 102.4))
+    board.register(sell_order(quantity: 10, price_per_kg: 50.78))
+    board.register(sell_order(quantity: 2.8, price_per_kg: 75))
+    board.register(buy_order(quantity: 2.8, price_per_kg: 78.55))
+
+    expect(board.summary).to eq(
+      "SELL: 10kg for £50.78\n" +
+      "SELL: 10.3kg for £75\n" +
+      "BUY: 12.7kg for £102.4\n" +
+      "BUY: 9.3kg for £78.55"
+    )
+  end
+
   def sell_order(quantity:, price_per_kg:)
     Order.new(user_id: "any", quantity: quantity, price_per_kg: price_per_kg, type: :sell)
   end
