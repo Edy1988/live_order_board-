@@ -1,6 +1,6 @@
-require './lib/live_board'
+require './lib/live_order_board'
 
-board = LiveBoard.new
+board = LiveOrderBoard.new
 
 board.register(Order.new(user_id: "user1", quantity_in_kg: 6.5, price_per_kg: 78.55, type: :buy))
 board.register(Order.new(user_id: "user2", quantity_in_kg: 7.5, price_per_kg: 75, type: :sell))
