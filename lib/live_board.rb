@@ -13,15 +13,25 @@ class LiveBoard
   def summary
     return "There are no orders registered." if @all_orders.empty?
 
-    @all_orders.sort{ |o1, o2|
-      o1.price_per_kg <=> o2.price_per_kg
-    }.map { |order|
-      "- #{order.quantity}kg for £#{order.price_per_kg}"
+    merged_orders_by_price.sort.map { |(price, quantity)|
+      "- #{quantity}kg for £#{price}"
     }.join("\n")
   end
 
   def cancel(order)
     @all_orders.delete(order)
+  end
+
+  private
+  def merged_orders_by_price
+    @all_orders.reduce({}) { |merged, order|
+      if merged.key?(order.price_per_kg)
+        merged[order.price_per_kg] += order.quantity
+      else
+        merged[order.price_per_kg] = order.quantity
+      end
+      merged
+    }
   end
 
 end
