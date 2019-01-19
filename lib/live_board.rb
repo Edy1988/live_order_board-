@@ -3,28 +3,39 @@ require 'order'
 class LiveBoard
 
   def initialize
-    @all_orders = []
+    @sell_orders = []
+    @buy_orders = []
   end
 
   def register(order)
-    @all_orders << order
+    if order.type == :sell
+      @sell_orders << order
+    else
+      @buy_orders << order
+    end
   end
 
   def summary
-    return "There are no orders registered." if @all_orders.empty?
+    return "There are no orders registered." if @sell_orders.empty? && @buy_orders.empty?
 
-    merged_orders_by_price.sort.map { |(price, quantity)|
+    formatted_sell_orders = merge_by_price(@sell_orders).sort.map { |(price, quantity)|
       "SELL: #{quantity}kg for £#{price}"
-    }.join("\n")
+    }
+
+    formatted_buy_orders = merge_by_price(@buy_orders).map { |(price, quantity)|
+      "BUY: #{quantity}kg for £#{price}"
+    }
+
+    (formatted_sell_orders + formatted_buy_orders).join("\n")
   end
 
   def cancel(order)
-    @all_orders.delete(order)
+    @sell_orders.delete(order)
   end
 
   private
-  def merged_orders_by_price
-    @all_orders.reduce({}) { |merged, order|
+  def merge_by_price(orders)
+    orders.reduce({}) { |merged, order|
       if merged.key?(order.price_per_kg)
         merged[order.price_per_kg] += order.quantity
       else

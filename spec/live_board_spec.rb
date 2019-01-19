@@ -59,4 +59,12 @@ describe 'LiveBoard' do
     )
   end
 
+  it 'generates summary of one buy order' do
+    board = LiveBoard.new
+
+    board.register(Order.new(user_id: "user1", quantity: 7.5, price_per_kg: 80, type: :buy))
+
+    expect(board.summary).to eq "BUY: 7.5kg for £80"
+  end
+
 end
