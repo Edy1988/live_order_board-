@@ -22,7 +22,7 @@ class LiveBoard
       "SELL: #{quantity}kg for £#{price}"
     }
 
-    formatted_buy_orders = merge_by_price(@buy_orders).map { |(price, quantity)|
+    formatted_buy_orders = merge_by_price(@buy_orders).sort.reverse.map { |(price, quantity)|
       "BUY: #{quantity}kg for £#{price}"
     }
 
