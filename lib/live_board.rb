@@ -14,7 +14,7 @@ class LiveBoard
     return "There are no orders registered." if @all_orders.empty?
 
     merged_orders_by_price.sort.map { |(price, quantity)|
-      "- #{quantity}kg for £#{price}"
+      "SELL: #{quantity}kg for £#{price}"
     }.join("\n")
   end
 

@@ -13,7 +13,7 @@ describe 'LiveBoard' do
 
     board.register(Order.new(user_id: "user1", quantity: 7.5, price_per_kg: 80, type: :sell))
 
-    expect(board.summary).to eq "- 7.5kg for £80"
+    expect(board.summary).to eq "SELL: 7.5kg for £80"
   end
 
   it 'generates summary of sell orders in ascending order by price' do
@@ -24,9 +24,9 @@ describe 'LiveBoard' do
     board.register(Order.new(user_id: "user3", quantity: 3.2, price_per_kg: 75, type: :sell))
 
     expect(board.summary).to eq(
-      "- 10kg for £50.78\n" +
-      "- 3.2kg for £75\n" +
-      "- 5.5kg for £100"
+      "SELL: 10kg for £50.78\n" +
+      "SELL: 3.2kg for £75\n" +
+      "SELL: 5.5kg for £100"
     )
   end
 
@@ -38,8 +38,8 @@ describe 'LiveBoard' do
     board.register(Order.new(user_id: "user3", quantity: 2.8, price_per_kg: 78.55, type: :sell))
 
     expect(board.summary).to eq(
-      "- 10kg for £50.78\n" +
-      "- 9.3kg for £78.55"
+      "SELL: 10kg for £50.78\n" +
+      "SELL: 9.3kg for £78.55"
     )
   end
 
@@ -54,10 +54,9 @@ describe 'LiveBoard' do
     board.cancel(order)
 
     expect(board.summary).to eq(
-      "- 3.2kg for £75\n" +
-      "- 5.5kg for £100"
+      "SELL: 3.2kg for £75\n" +
+      "SELL: 5.5kg for £100"
     )
   end
-
 
 end
