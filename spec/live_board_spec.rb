@@ -1,6 +1,6 @@
 require 'live_board'
 
-describe 'LiveBoard' do
+describe 'Live Order Board' do
 
   it 'generates empty summary when no orders registered' do
     board = LiveBoard.new
@@ -11,7 +11,7 @@ describe 'LiveBoard' do
   it 'generates summary of one sell order' do
     board = LiveBoard.new
 
-    board.register(Order.new(user_id: "user1", quantity: 7.5, price_per_kg: 80, type: :sell))
+    board.register(sell_order(quantity: 7.5, price_per_kg: 80))
 
     expect(board.summary).to eq "SELL: 7.5kg for £80"
   end
@@ -19,9 +19,9 @@ describe 'LiveBoard' do
   it 'generates summary of sell orders in ascending order by price' do
     board = LiveBoard.new
 
-    board.register(Order.new(user_id: "user1", quantity: 5.5, price_per_kg: 100, type: :sell))
-    board.register(Order.new(user_id: "user2", quantity: 10, price_per_kg: 50.78, type: :sell))
-    board.register(Order.new(user_id: "user3", quantity: 3.2, price_per_kg: 75, type: :sell))
+    board.register(sell_order(quantity: 5.5, price_per_kg: 100))
+    board.register(sell_order(quantity: 10, price_per_kg: 50.78))
+    board.register(sell_order(quantity: 3.2, price_per_kg: 75))
 
     expect(board.summary).to eq(
       "SELL: 10kg for £50.78\n" +
@@ -33,9 +33,9 @@ describe 'LiveBoard' do
   it 'generates summary of sell orders merging same price orders' do
     board = LiveBoard.new
 
-    board.register(Order.new(user_id: "user1", quantity: 6.5, price_per_kg: 78.55, type: :sell))
-    board.register(Order.new(user_id: "user2", quantity: 10, price_per_kg: 50.78, type: :sell))
-    board.register(Order.new(user_id: "user3", quantity: 2.8, price_per_kg: 78.55, type: :sell))
+    board.register(sell_order(quantity: 6.5, price_per_kg: 78.55))
+    board.register(sell_order(quantity: 10, price_per_kg: 50.78))
+    board.register(sell_order(quantity: 2.8, price_per_kg: 78.55))
 
     expect(board.summary).to eq(
       "SELL: 10kg for £50.78\n" +
@@ -45,13 +45,13 @@ describe 'LiveBoard' do
 
   it 'can cancel a sell order' do
     board = LiveBoard.new
-    order = Order.new(user_id: "user2", quantity: 10, price_per_kg: 50.78, type: :sell)
+    sell_order_to_cancel = sell_order(quantity: 10, price_per_kg: 50.78)
 
-    board.register(Order.new(user_id: "user1", quantity: 5.5, price_per_kg: 100, type: :sell))
-    board.register(order)
-    board.register(Order.new(user_id: "user3", quantity: 3.2, price_per_kg: 75, type: :sell))
+    board.register(sell_order(quantity: 5.5, price_per_kg: 100))
+    board.register(sell_order_to_cancel)
+    board.register(sell_order(quantity: 3.2, price_per_kg: 75))
 
-    board.cancel(order)
+    board.cancel(sell_order_to_cancel)
 
     expect(board.summary).to eq(
       "SELL: 3.2kg for £75\n" +
@@ -62,7 +62,7 @@ describe 'LiveBoard' do
   it 'generates summary of one buy order' do
     board = LiveBoard.new
 
-    board.register(Order.new(user_id: "user1", quantity: 7.5, price_per_kg: 80, type: :buy))
+    board.register(buy_order(quantity: 7.5, price_per_kg: 80))
 
     expect(board.summary).to eq "BUY: 7.5kg for £80"
   end
@@ -70,9 +70,9 @@ describe 'LiveBoard' do
   it 'generates summary of buy orders in descending order by price' do
     board = LiveBoard.new
 
-    board.register(Order.new(user_id: "user1", quantity: 5.5, price_per_kg: 100, type: :buy))
-    board.register(Order.new(user_id: "user2", quantity: 10, price_per_kg: 50.78, type: :buy))
-    board.register(Order.new(user_id: "user3", quantity: 3.2, price_per_kg: 75, type: :buy))
+    board.register(buy_order(quantity: 5.5, price_per_kg: 100))
+    board.register(buy_order(quantity: 10, price_per_kg: 50.78))
+    board.register(buy_order(quantity: 3.2, price_per_kg: 75))
 
     expect(board.summary).to eq(
       "BUY: 5.5kg for £100\n" +
@@ -84,9 +84,9 @@ describe 'LiveBoard' do
   it 'generates summary of buy orders merging same price orders' do
     board = LiveBoard.new
 
-    board.register(Order.new(user_id: "user1", quantity: 6.5, price_per_kg: 78.55, type: :buy))
-    board.register(Order.new(user_id: "user2", quantity: 10, price_per_kg: 50.78, type: :buy))
-    board.register(Order.new(user_id: "user3", quantity: 2.8, price_per_kg: 78.55, type: :buy))
+    board.register(buy_order(quantity: 6.5, price_per_kg: 78.55))
+    board.register(buy_order(quantity: 10, price_per_kg: 50.78))
+    board.register(buy_order(quantity: 2.8, price_per_kg: 78.55))
 
     expect(board.summary).to eq(
       "BUY: 9.3kg for £78.55\n" +
@@ -96,18 +96,26 @@ describe 'LiveBoard' do
 
   it 'can cancel a buy order' do
     board = LiveBoard.new
-    order = Order.new(user_id: "user2", quantity: 10, price_per_kg: 50.78, type: :buy)
+    buy_order_to_cancel = buy_order(quantity: 10, price_per_kg: 50.78)
 
-    board.register(Order.new(user_id: "user1", quantity: 5.5, price_per_kg: 100, type: :buy))
-    board.register(order)
-    board.register(Order.new(user_id: "user3", quantity: 3.2, price_per_kg: 75, type: :buy))
+    board.register(buy_order(quantity: 5.5, price_per_kg: 100))
+    board.register(buy_order_to_cancel)
+    board.register(buy_order(quantity: 3.2, price_per_kg: 75))
 
-    board.cancel(order)
+    board.cancel(buy_order_to_cancel)
 
     expect(board.summary).to eq(
       "BUY: 5.5kg for £100\n" +
       "BUY: 3.2kg for £75"
     )
+  end
+
+  def sell_order(quantity:, price_per_kg:)
+    Order.new(user_id: "any", quantity: quantity, price_per_kg: price_per_kg, type: :sell)
+  end
+
+  def buy_order(quantity:, price_per_kg:)
+    Order.new(user_id: "any", quantity: quantity, price_per_kg: price_per_kg, type: :buy)
   end
 
 end
