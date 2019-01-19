@@ -81,4 +81,17 @@ describe 'LiveBoard' do
     )
   end
 
+  it 'generates summary of buy orders merging same price orders' do
+    board = LiveBoard.new
+
+    board.register(Order.new(user_id: "user1", quantity: 6.5, price_per_kg: 78.55, type: :buy))
+    board.register(Order.new(user_id: "user2", quantity: 10, price_per_kg: 50.78, type: :buy))
+    board.register(Order.new(user_id: "user3", quantity: 2.8, price_per_kg: 78.55, type: :buy))
+
+    expect(board.summary).to eq(
+      "BUY: 9.3kg for £78.55\n" +
+      "BUY: 10kg for £50.78"
+    )
+  end
+
 end
