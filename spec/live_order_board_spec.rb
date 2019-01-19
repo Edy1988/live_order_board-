@@ -1,4 +1,4 @@
-require 'live_board'
+require 'live_order_board'
 
 describe 'Live Order Board' do
 
