@@ -3,13 +3,13 @@ require 'live_order_board'
 describe 'Live Order Board' do
 
   it 'generates empty summary when no orders registered' do
-    board = LiveBoard.new
+    board = LiveOrderBoard.new
 
     expect(board.summary).to eq "There are no orders registered."
   end
 
   it 'generates summary of one sell order' do
-    board = LiveBoard.new
+    board = LiveOrderBoard.new
 
     board.register(sell_order(quantity_in_kg: 7.5, price_per_kg: 80))
 
@@ -17,7 +17,7 @@ describe 'Live Order Board' do
   end
 
   it 'generates summary of sell orders in ascending order by price' do
-    board = LiveBoard.new
+    board = LiveOrderBoard.new
 
     board.register(sell_order(quantity_in_kg: 5.5, price_per_kg: 100))
     board.register(sell_order(quantity_in_kg: 10, price_per_kg: 50.78))
@@ -31,7 +31,7 @@ describe 'Live Order Board' do
   end
 
   it 'generates summary of sell orders merging same price orders' do
-    board = LiveBoard.new
+    board = LiveOrderBoard.new
 
     board.register(sell_order(quantity_in_kg: 6.5, price_per_kg: 78.55))
     board.register(sell_order(quantity_in_kg: 10, price_per_kg: 50.78))
@@ -44,7 +44,7 @@ describe 'Live Order Board' do
   end
 
   it 'can cancel a sell order' do
-    board = LiveBoard.new
+    board = LiveOrderBoard.new
     sell_order_to_cancel = sell_order(quantity_in_kg: 10, price_per_kg: 50.78)
 
     board.register(sell_order(quantity_in_kg: 5.5, price_per_kg: 100))
@@ -60,7 +60,7 @@ describe 'Live Order Board' do
   end
 
   it 'generates summary of one buy order' do
-    board = LiveBoard.new
+    board = LiveOrderBoard.new
 
     board.register(buy_order(quantity_in_kg: 7.5, price_per_kg: 80))
 
@@ -68,7 +68,7 @@ describe 'Live Order Board' do
   end
 
   it 'generates summary of buy orders in descending order by price' do
-    board = LiveBoard.new
+    board = LiveOrderBoard.new
 
     board.register(buy_order(quantity_in_kg: 5.5, price_per_kg: 100))
     board.register(buy_order(quantity_in_kg: 10, price_per_kg: 50.78))
@@ -82,7 +82,7 @@ describe 'Live Order Board' do
   end
 
   it 'generates summary of buy orders merging same price orders' do
-    board = LiveBoard.new
+    board = LiveOrderBoard.new
 
     board.register(buy_order(quantity_in_kg: 6.5, price_per_kg: 78.55))
     board.register(buy_order(quantity_in_kg: 10, price_per_kg: 50.78))
@@ -95,7 +95,7 @@ describe 'Live Order Board' do
   end
 
   it 'can cancel a buy order' do
-    board = LiveBoard.new
+    board = LiveOrderBoard.new
     buy_order_to_cancel = buy_order(quantity_in_kg: 10, price_per_kg: 50.78)
 
     board.register(buy_order(quantity_in_kg: 5.5, price_per_kg: 100))
@@ -111,7 +111,7 @@ describe 'Live Order Board' do
   end
 
   it 'generates summary of sell and buy orders' do
-    board = LiveBoard.new
+    board = LiveOrderBoard.new
 
     board.register(buy_order(quantity_in_kg: 6.5, price_per_kg: 78.55))
     board.register(sell_order(quantity_in_kg: 7.5, price_per_kg: 75))

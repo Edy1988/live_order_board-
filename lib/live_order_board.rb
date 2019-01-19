@@ -1,6 +1,6 @@
 require_relative 'order'
 
-class LiveBoard
+class LiveOrderBoard
 
   def initialize
     @sell_orders = []
