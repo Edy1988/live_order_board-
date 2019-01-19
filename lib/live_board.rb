@@ -11,4 +11,8 @@ class LiveBoard
     @all_orders << order
   end
 
+  def summary
+    "There are no orders registered."
+  end
+
 end

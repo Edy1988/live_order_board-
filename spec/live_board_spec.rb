@@ -22,4 +22,10 @@ describe 'LiveBoard' do
     expect(board.all_orders[1]).to eq order2
   end
 
+  it 'generates empty summary when no orders registered' do
+    board = LiveBoard.new
+
+    expect(board.summary).to eq "There are no orders registered."
+  end
+
 end
