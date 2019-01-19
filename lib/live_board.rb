@@ -30,7 +30,11 @@ class LiveBoard
   end
 
   def cancel(order)
-    @sell_orders.delete(order)
+    if order.type == :sell
+      @sell_orders.delete(order)
+    else
+      @buy_orders.delete(order)
+    end
   end
 
   private
