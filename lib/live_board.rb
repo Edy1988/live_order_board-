@@ -14,7 +14,11 @@ class LiveBoard
   def summary
     return "There are no orders registered." if @all_orders.empty?
 
-    "- #{@all_orders[0].quantity}kg for £#{@all_orders[0].price_per_kg}"
+    @all_orders.sort{ |o1, o2|
+      o1.price_per_kg <=> o2.price_per_kg
+    }.map { |order|
+      "- #{order.quantity}kg for £#{order.price_per_kg}"
+    }.join("\n")
   end
 
 end
