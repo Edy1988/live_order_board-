@@ -97,10 +97,12 @@ Alternatively, you can check the specs to see working examples.
 
 ### Other considered solutions
 
+Since the requirements stated that there is no UI needed, I have not provided solutions for edge cases where the user input would have been incorrect, ie: text instead of an integer.
+
 Initially, I chose to pass the order data as parameters to the `LiveOrderBoard.register` method and create the `Order` instance inside the method. It didn't feel right to me that the board should create orders, so I changed my mind and decided to pass `Order` instances instead.
 
 When planning the implementation of the program I was considering having separate classes for SELL and BUY orders. I decided that maybe this would be an overkill for such a simple requirement. I believe separate classes would be more suitable if there were more order types with different data/properties.
 
 I considered having two summary methods, one for buy orders and another for sell orders. Since the requirements were unspecific about how to handle both summaries, I decided to keep them in the same summary, so it is easier for the business analyst to see a complete summary in one place. It would be simple to separate them if necessary.
 
-I considered the performance of the program with the chain of array operations (reduce, sort map...) used in the implementation. The performance could be improved by reducing loop operations, but I think that, at this stage, premature optimisation could damage code readability. To avoid premature optimisation, I believe we should measure performance over time and improve it when needed.
+I considered the performance of the program with the chain of array operations (reduce, sort, map...) used in the implementation. The performance could be improved by reducing loop operations, but I think that, at this stage, premature optimisation could damage code readability. To avoid premature optimisation, I believe we should measure performance over time and improve it when needed.
